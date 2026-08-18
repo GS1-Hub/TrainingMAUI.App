@@ -6,9 +6,16 @@
     xmlns:local="clr-namespace:Training"
     Title="Training">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent
+            Title="Clientes"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+
+        <ShellContent
+            Title="Clientes"
+            ContentTemplate="{DataTemplate local:ClientsPage}"
+            Route="ProdutosPage" />
+    </TabBar>
 
 </Shell>

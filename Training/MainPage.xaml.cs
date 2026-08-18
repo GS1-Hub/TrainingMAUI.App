@@ -1,24 +1,61 @@
-﻿namespace Training
+﻿using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
+
+namespace Training
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private readonly IConfiguration _configuration;
 
-        public MainPage()
+        public MainPage(IConfiguration configuration)
         {
             InitializeComponent();
+            _configuration = configuration;
         }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            count++;
+            base.OnAppearing();
+            var produtos = GetProdutos();
+            ProdutosCollectionView.ItemsSource = produtos;
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        public List<Dictionary<string, object?>> GetProdutos()
+        {
+            var produtos = new List<Dictionary<string, object?>>();
+            string connectionString = _configuration["ConnectionStrings:Default"]
+                ?? throw new InvalidOperationException("Connection string não encontrada");
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+                                SELECT 
+                                    c.id AS cliente_id, 
+                                    c.nome AS cliente_nome, 
+                                    e.id AS encomenda_id, 
+                                    e.data_encomenda
+                                FROM clientes c
+                                INNER JOIN encomendas e ON c.id = e.cliente_id
+                                ORDER BY c.nome";
+
+                using var cmd = new MySqlCommand(query, conn);
+                using var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    produtos.Add(new Dictionary<string, object?>
+                    {
+                        ["cliente_id"] = reader.GetInt32("cliente_id"),
+                        ["cliente_nome"] = reader.GetString("cliente_nome"),
+                        ["encomenda_id"] = reader.IsDBNull(reader.GetOrdinal("encomenda_id"))
+                            ? null : reader.GetInt32("encomenda_id"),
+                                        ["data_encomenda"] = reader.IsDBNull(reader.GetOrdinal("data_encomenda"))
+                            ? null : reader.GetDateTime("data_encomenda")
+                    });
+                }
+            }
+            return produtos;
         }
     }
 }

@@ -80,4 +80,10 @@
 		<PackageReference Include="MySql.Data" Version="26.7.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="ClientsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
