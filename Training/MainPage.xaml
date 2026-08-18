@@ -5,7 +5,7 @@
 
     <Grid Padding="20" RowDefinitions="Auto,*">
 
-        <Label Grid.Row="0" Text="Clientes e Encomendas" FontSize="24" FontAttributes="Bold" Margin="0,0,0,10" />
+        <Label Grid.Row="0" Text="Clientes e as suas Encomendas" FontSize="24" FontAttributes="Bold" Margin="0,0,0,10" />
 
         <CollectionView Grid.Row="1" x:Name="ProdutosCollectionView">
             <CollectionView.Header>
