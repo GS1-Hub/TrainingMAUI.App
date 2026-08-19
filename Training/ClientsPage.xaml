@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Training.ClientsPage"
              Title="ClientsPage">
-    <Grid Padding="20" RowDefinitions="Auto,*">
+    <Grid Padding="20" RowDefinitions="Auto,Auto">
 
         <Label Grid.Row="0" Text="Clientes" FontSize="24" FontAttributes="Bold" Margin="0,0,0,10" />
 

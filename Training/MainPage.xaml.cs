@@ -17,7 +17,6 @@ namespace Training
         {
             base.OnAppearing();
             var produtos = GetProdutos();
-            ProdutosCollectionView.ItemsSource = produtos;
         }
 
         public List<Dictionary<string, object?>> GetProdutos()
@@ -56,6 +55,35 @@ namespace Training
                 }
             }
             return produtos;
+        }
+
+        private List<string> ListStrings()
+        {
+            List<string> listShow = [];
+
+            listShow.AddRange("Olá", "Adeus", "Bonjour");
+
+            if (listShow.Count < 0)
+                return [];
+
+            return listShow;
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            List<string> list = ListStrings();
+
+            LabelListString.Text = String.Join("\n", list);
+            LabelListString.FontSize = 40;
+            LabelListString.FontAttributes = FontAttributes.Bold;
+
+            LabelListString2.Text = String.Join("\n", list);
+            LabelListString2.FontSize = 40;
+            LabelListString2.FontAttributes = FontAttributes.Bold;
+
+            LabelListString3.Text = String.Join("\n", list);
+            LabelListString3.FontSize = 40;
+            LabelListString3.FontAttributes = FontAttributes.Bold;
         }
     }
 }
